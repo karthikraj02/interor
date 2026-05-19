@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+:root,
+:root[data-theme="dark"] {
+  --bg-primary: #0b0a09;
+  --bg-secondary: #161311;
+  --text-primary: #f4efe6;
+  --text-secondary: #cdbba2;
+  --accent: #d2b176;
+  --glass: rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #f7f2e8;
+  --bg-secondary: #ece2d2;
+  --text-primary: #231f1b;
+  --text-secondary: #5c4b3a;
+  --accent: #b68a47;
+  --glass: rgba(35, 31, 27, 0.08);
+}
+
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    cursor: auto;
+  }
+}
+
+.hero-section {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(210, 177, 118, 0.18), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(255, 209, 132, 0.16), transparent 30%),
+    linear-gradient(160deg, var(--bg-primary) 10%, var(--bg-secondary) 60%, #090806 100%);
+}
+
+.glass-card {
+  background: color-mix(in srgb, var(--glass) 90%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  color: var(--text-secondary);
+}
+
+.section-title {
+  margin-top: 0.8rem;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  line-height: 1.1;
+}
+
+.section-copy {
+  margin-top: 1rem;
+  color: var(--text-secondary);
+  max-width: 44rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  border-radius: 999px;
+  padding: 0.85rem 1.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--accent), #f2d6a7);
+  color: #140f08;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(210, 177, 118, 0.3);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.btn-secondary:hover,
+.menu-link:hover {
+  color: var(--accent);
+}
+
+.contact-input {
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.16);
+  padding: 0.82rem 1rem;
+  outline: none;
+}
+
+.contact-input:focus {
+  border-color: var(--accent);
+}
+
+.loading-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at center, rgba(210, 177, 118, 0.16), transparent 45%),
+    var(--bg-primary);
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 80;
+  mix-blend-mode: difference;
+}
+
+.ambient-light {
+  position: fixed;
+  inset: -30%;
+  background: radial-gradient(circle at 35% 25%, rgba(210, 177, 118, 0.2), transparent 35%);
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: -10;
+}
