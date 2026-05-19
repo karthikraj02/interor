@@ -24,13 +24,17 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  cursor: none;
+  min-height: 100%;
 }
 
-@media (max-width: 768px) {
-  html,
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (hover: hover) and (pointer: fine) {
   body {
-    cursor: auto;
+    cursor: none;
   }
 }
 

@@ -86,6 +86,10 @@ export default function Home() {
     [],
   );
 
+  const whatsappNumber = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/\D/g, "");
+  const whatsappLink = whatsappNumber.length >= 10 ? `https://wa.me/${whatsappNumber}` : "#contact";
+  const displayPhone = process.env.NEXT_PUBLIC_PHONE_DISPLAY ?? "Phone available on consultation request";
+
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1600);
     return () => clearTimeout(timer);
@@ -236,6 +240,7 @@ export default function Home() {
   return (
     <div className="relative overflow-x-hidden bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 -z-20 opacity-30" aria-hidden />
+      <p className="sr-only">Decorative 3D ambient animation in the background.</p>
       <div className="ambient-light" aria-hidden />
       <div className="custom-cursor hidden md:block" style={{ transform: `translate(${cursor.x - 10}px, ${cursor.y - 10}px)` }} />
       <div className="fixed left-0 top-0 z-50 h-1 bg-[var(--accent)]" style={{ width: `${progress}%` }} />
@@ -261,7 +266,7 @@ export default function Home() {
             >
               {theme === "dark" ? "Light" : "Dark"} Mode
             </button>
-            <a href="https://wa.me/919999999999" className="rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-black">
+            <a href={whatsappLink} className="rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-black">
               WhatsApp
             </a>
           </div>
@@ -296,7 +301,7 @@ export default function Home() {
               transition={{ duration: 1.2 }}
               className="glass-card h-[420px] rounded-3xl p-6"
             >
-              <div className="h-full rounded-2xl bg-[url('https://images.unsplash.com/photo-1616594039964-46f2f79fd3f2?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center" />
+              <div className="h-full rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_20%_20%,rgba(210,177,118,0.28),transparent_40%),linear-gradient(140deg,#191511,#2e251d_35%,#120f0b)]" />
             </motion.div>
           </div>
         </section>
@@ -355,9 +360,9 @@ export default function Home() {
           <div className="mt-12 rounded-3xl border border-white/10 p-6">
             <p className="text-sm text-[var(--text-secondary)]">Interactive before / after reveal</p>
             <div className="relative mt-4 h-56 overflow-hidden rounded-2xl">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center" />
+              <div className="absolute inset-0 bg-[linear-gradient(130deg,#2a2119,#18120d_40%,#0f0c08)]" />
               <div
-                className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center"
+                className="absolute inset-0 bg-[linear-gradient(120deg,#dbc29b,#9f7f52_55%,#4a3623)]"
                 style={{ clipPath: `inset(0 ${100 - slider}% 0 0)` }}
               />
               <input
@@ -444,7 +449,7 @@ export default function Home() {
               <a href="#contact" className="btn-primary">
                 Schedule Consultation
               </a>
-              <a href="https://wa.me/919999999999" className="btn-secondary">
+              <a href={whatsappLink} className="btn-secondary">
                 Chat on WhatsApp
               </a>
             </div>
@@ -468,7 +473,7 @@ export default function Home() {
               <div className="glass-card rounded-3xl p-6">
                 <h3 className="text-xl">Visit us</h3>
                 <p className="mt-2 text-[var(--text-secondary)]">Mangalore & Bangalore, India</p>
-                <p className="text-[var(--text-secondary)]">+91 99999 99999</p>
+                <p className="text-[var(--text-secondary)]">{displayPhone}</p>
               </div>
               <iframe
                 title="Sai Interior Designers location"

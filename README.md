@@ -29,3 +29,8 @@ npm run dev
 
 - `GET /api/health`
 - `POST /api/contact`
+
+## Environment variables
+
+Frontend supports optional `NEXT_PUBLIC_WHATSAPP_NUMBER` and `NEXT_PUBLIC_PHONE_DISPLAY` for business contact details.
+Backend supports `PORT` (see `backend/.env.example`).
