@@ -25,7 +25,13 @@ export const metadata: Metadata = {
   title: { default: `${businessName} — Interior Designers in Mangalore & Udupi`, template: `%s | ${businessName}` },
   description,
   metadataBase: new URL(siteUrl),
-  icons: { icon: "/images/logo.png", apple: "/images/logo.png" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "256x256" },
+    ],
+    apple: "/apple-icon.png",
+  },
   robots: { index: process.env.NODE_ENV === "production", follow: process.env.NODE_ENV === "production" },
   openGraph: {
     title: businessName,
