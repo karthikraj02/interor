@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { MobileMenu } from "./MobileMenu";
@@ -30,10 +32,17 @@ export function Navbar({ businessName, whatsappHref }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-black/40 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a href="#home" className="text-sm tracking-[.25em]">
-          {businessName.toUpperCase()}
-        </a>
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+        <Link href="/#home" className="flex items-center gap-3">
+          <Image
+            src="/images/logo.png"
+            alt={businessName}
+            width={140}
+            height={70}
+            className="h-10 w-auto object-contain"
+            priority
+          />
+        </Link>
         <div className="hidden gap-7 md:flex">
           {navItems.map((item) => (
             <a key={item.href} href={item.href} className="menu-link">

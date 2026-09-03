@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { branches } from "@/data/site";
 import { getSiteConfig } from "@/lib/site-config";
@@ -22,7 +23,15 @@ export function Footer({ businessName, instagramUrl, youtubeUrl, facebookUrl }: 
     <footer className="site-footer px-6 py-12">
       <div className="mx-auto grid max-w-7xl gap-8 text-sm text-[var(--text-secondary)] md:grid-cols-4">
         <div>
-          <p className="font-display text-lg text-[var(--text-primary)]">{businessName}</p>
+          <Link href="/#home" className="inline-block mb-3">
+            <Image
+              src="/images/logo.png"
+              alt={businessName}
+              width={160}
+              height={80}
+              className="h-12 w-auto object-contain"
+            />
+          </Link>
           <p className="mt-3 max-w-xs">
             Top interior designers in Mangalore &amp; Udupi — residential interiors, commercial spaces, and
             modular kitchens, from first concept through handover. Serving since 2015.
