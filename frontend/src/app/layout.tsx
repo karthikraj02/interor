@@ -16,18 +16,20 @@ const bodyFont = Inter({
   display: "swap",
 });
 
-const businessName = process.env.NEXT_PUBLIC_BUSINESS_NAME ?? "Sai Interior Designer";
+const businessName = process.env.NEXT_PUBLIC_BUSINESS_NAME ?? "Sai Interior Designers";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const description =
+  "Sai Interior Designers — top interior designers in Mangalore & Udupi since 2015. Residential interiors, commercial spaces, and modular kitchens that blend creativity, functionality, and timeless elegance.";
 
 export const metadata: Metadata = {
-  title: { default: businessName, template: `%s | ${businessName}` },
-  description:
-    "A considered interior design studio for homes and commercial spaces — thoughtful planning, detailed execution, and a quiet sense of luxury.",
+  title: { default: `${businessName} — Interior Designers in Mangalore & Udupi`, template: `%s | ${businessName}` },
+  description,
   metadataBase: new URL(siteUrl),
+  icons: { icon: "/images/logo.png", apple: "/images/logo.png" },
   robots: { index: process.env.NODE_ENV === "production", follow: process.env.NODE_ENV === "production" },
   openGraph: {
     title: businessName,
-    description: "Thoughtful interior design for homes and commercial spaces.",
+    description,
     url: siteUrl,
     siteName: businessName,
     type: "website",
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: businessName,
-    description: "Thoughtful interior design for homes and commercial spaces.",
+    description,
   },
 };
 

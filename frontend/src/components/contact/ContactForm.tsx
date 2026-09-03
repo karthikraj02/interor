@@ -61,6 +61,24 @@ export function ContactForm() {
         setErrors(data.fields ?? {});
         throw new Error(data.error ?? "Unable to send your request. Please try again.");
       }
+
+      const whatsappNumber = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/\D/g, "");
+      if (whatsappNumber) {
+        const messageLines = [
+          "Hi, I just submitted a new interior design enquiry:",
+          `*Name:* ${form.name}`,
+          `*Phone:* ${form.phone}`,
+          `*Email:* ${form.email}`,
+          `*Location:* ${form.location}`,
+          `*Project:* ${form.projectType} - ${form.propertyType}`,
+          `*Budget:* ${form.budget}`,
+          form.area ? `*Area:* ${form.area}` : null,
+          form.preferredStartDate ? `*Start Date:* ${form.preferredStartDate}` : null,
+          form.message ? `*Message:* ${form.message}` : null,
+        ].filter(Boolean).join("\n");
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageLines)}`, "_blank");
+      }
+
       setForm(empty);
       setStatus("success");
       setNotice("Thank you — your request has been received. We'll be in touch shortly.");

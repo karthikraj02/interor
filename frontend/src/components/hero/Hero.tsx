@@ -6,17 +6,17 @@ export function Hero() {
       <ThreeBackground />
       <div className="relative z-10 mx-auto grid min-h-[82vh] max-w-7xl items-center gap-12 py-20 lg:grid-cols-2">
         <div>
-          <p className="section-label eyebrow-rule">INTERIORS, DESIGNED AROUND YOU</p>
+          <p className="section-label eyebrow-rule">SAI INTERIOR DESIGNERS · SINCE 2015</p>
           <h1 className="mt-5 text-5xl font-semibold leading-tight md:text-7xl">
-            Thoughtful spaces with a quiet sense of luxury.
+            We design thoughtful, livable spaces.
           </h1>
           <p className="section-copy text-lg">
-            Start a conversation with our design team about your home or commercial interior project — from first
-            sketch to final detail.
+            Based in Mangalore, we specialise in residential interiors, commercial spaces, and modular kitchens
+            that blend creativity, functionality, and timeless elegance. Every space tells a story — yours.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a href="#contact" className="btn-primary">
-              Plan your project
+              Get a quotation
             </a>
             <a href="#portfolio" className="btn-secondary">
               See our work

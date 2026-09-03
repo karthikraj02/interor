@@ -1,35 +1,152 @@
-import pg from "pg";
-const { Pool } = pg;
-const connectionString = process.env.DATABASE_URL;
-if (!connectionString) throw new Error("DATABASE_URL is required.");
-const pool = new Pool({ connectionString, ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: true } : undefined });
+import mongoose from "mongoose";
+
+const connectionString = process.env.MONGO_URI;
+
+if (!connectionString) throw new Error("MONGO_URI is required.");
+
+const leadSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, index: true },
+  phone: { type: String, required: true, index: true },
+  projectType: { type: String, required: true },
+  propertyType: { type: String, required: true },
+  location: { type: String, required: true },
+  area: { type: String, default: null },
+  budget: { type: String, required: true },
+  preferredStartDate: { type: String, default: null },
+  message: { type: String, required: true },
+  consent: { type: Boolean, required: true },
+  status: { type: String, required: true, default: "NEW", index: true },
+  source: { type: String, required: true, default: "website" },
+  notes: { type: String, default: null },
+  assignedTo: { type: String, default: null },
+}, { timestamps: true });
+
+leadSchema.index({ createdAt: -1 });
+
+// Ensure we don't overwrite the model if it's already compiled
+const Lead = mongoose.models.Lead || mongoose.model("Lead", leadSchema);
+
 export async function ensureDatabase() {
-  await pool.query(`CREATE EXTENSION IF NOT EXISTS pgcrypto; CREATE TABLE IF NOT EXISTS leads (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, project_type TEXT NOT NULL, property_type TEXT NOT NULL, location TEXT NOT NULL, area TEXT, budget TEXT NOT NULL, preferred_start_date DATE, message TEXT NOT NULL, consent BOOLEAN NOT NULL, status TEXT NOT NULL DEFAULT 'NEW', source TEXT NOT NULL DEFAULT 'website', notes TEXT, assigned_to TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()); CREATE INDEX IF NOT EXISTS leads_email_idx ON leads(email); CREATE INDEX IF NOT EXISTS leads_phone_idx ON leads(phone); CREATE INDEX IF NOT EXISTS leads_status_idx ON leads(status); CREATE INDEX IF NOT EXISTS leads_created_at_idx ON leads(created_at DESC);`);
-}
-export async function createLead(lead) {
-  const result = await pool.query(`INSERT INTO leads (name,email,phone,project_type,property_type,location,area,budget,preferred_start_date,message,consent,source) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id,name,email,phone,project_type AS "projectType",property_type AS "propertyType",location,area,budget,preferred_start_date AS "preferredStartDate",message,source,created_at AS "createdAt"`, [lead.name, lead.email.toLowerCase(), lead.phone, lead.projectType, lead.propertyType, lead.location, lead.area || null, lead.budget, lead.preferredStartDate || null, lead.message, lead.consent, lead.source]);
-  return result.rows[0];
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+  await mongoose.connect(connectionString);
 }
 
-const columns = `id,name,email,phone,project_type AS "projectType",property_type AS "propertyType",location,area,budget,preferred_start_date AS "preferredStartDate",message,consent,status,source,notes,assigned_to AS "assignedTo",created_at AS "createdAt",updated_at AS "updatedAt"`;
+export async function createLead(lead) {
+  const result = await Lead.create({
+    name: lead.name,
+    email: lead.email.toLowerCase(),
+    phone: lead.phone,
+    projectType: lead.projectType,
+    propertyType: lead.propertyType,
+    location: lead.location,
+    area: lead.area || null,
+    budget: lead.budget,
+    preferredStartDate: lead.preferredStartDate || null,
+    message: lead.message,
+    consent: lead.consent,
+    source: lead.source
+  });
+  
+  const obj = result.toObject();
+  return {
+    id: obj._id.toString(),
+    name: obj.name,
+    email: obj.email,
+    phone: obj.phone,
+    projectType: obj.projectType,
+    propertyType: obj.propertyType,
+    location: obj.location,
+    area: obj.area,
+    budget: obj.budget,
+    preferredStartDate: obj.preferredStartDate,
+    message: obj.message,
+    consent: obj.consent,
+    status: obj.status,
+    source: obj.source,
+    notes: obj.notes,
+    assignedTo: obj.assignedTo,
+    createdAt: obj.createdAt,
+    updatedAt: obj.updatedAt
+  };
+}
+
 export async function listLeads({ search, status, limit, offset }) {
-  const values = []; const clauses = [];
-  if (search) { values.push(`%${search}%`); clauses.push(`(name ILIKE $${values.length} OR email ILIKE $${values.length} OR phone ILIKE $${values.length})`); }
-  if (status) { values.push(status); clauses.push(`status = $${values.length}`); }
-  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
-  values.push(limit, offset);
-  const result = await pool.query(`SELECT ${columns} FROM leads ${where} ORDER BY created_at DESC LIMIT $${values.length - 1} OFFSET $${values.length}`, values);
-  const total = await pool.query(`SELECT COUNT(*)::int AS count FROM leads ${where}`, values.slice(0, -2));
-  return { items: result.rows, total: total.rows[0].count };
+  const query = {};
+  if (search) {
+    query.$or = [
+      { name: new RegExp(search, "i") },
+      { email: new RegExp(search, "i") },
+      { phone: new RegExp(search, "i") }
+    ];
+  }
+  if (status) {
+    query.status = status;
+  }
+
+  const items = await Lead.find(query)
+    .sort({ createdAt: -1 })
+    .skip(offset)
+    .limit(limit)
+    .lean();
+
+  const total = await Lead.countDocuments(query);
+  
+  return { 
+    items: items.map(obj => ({
+      ...obj,
+      id: obj._id.toString(),
+      _id: undefined,
+      __v: undefined
+    })), 
+    total 
+  };
 }
+
 export async function updateLead(id, update) {
-  const fields = { status: "status", notes: "notes", assignedTo: "assigned_to" }; const entries = Object.entries(update).filter(([key]) => key in fields);
+  const fields = { status: "status", notes: "notes", assignedTo: "assignedTo" }; 
+  const entries = Object.entries(update).filter(([key]) => key in fields);
   if (!entries.length) return null;
-  const values = entries.map(([, value]) => value); const sets = entries.map(([key], index) => `${fields[key]} = $${index + 1}`); values.push(id);
-  const result = await pool.query(`UPDATE leads SET ${sets.join(", ")}, updated_at = NOW() WHERE id = $${values.length} RETURNING ${columns}`, values);
-  return result.rows[0] ?? null;
+  
+  const sets = {};
+  for (const [key, value] of entries) {
+    sets[fields[key]] = value;
+  }
+  
+  const result = await Lead.findByIdAndUpdate(id, { $set: sets }, { new: true }).lean();
+  if (!result) return null;
+  
+  return {
+    ...result,
+    id: result._id.toString(),
+    _id: undefined,
+    __v: undefined
+  };
 }
+
 export async function dashboardStats() {
-  const result = await pool.query(`SELECT status, COUNT(*)::int AS count FROM leads GROUP BY status`); const counts = Object.fromEntries(result.rows.map((row) => [row.status, row.count])); const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
-  return { total, counts, conversionRate: total ? Number((((counts.WON ?? 0) / total) * 100).toFixed(1)) : 0 };
+  const stats = await Lead.aggregate([
+    {
+      $group: {
+        _id: "$status",
+        count: { $sum: 1 }
+      }
+    }
+  ]);
+  
+  const counts = {};
+  let total = 0;
+  
+  for (const stat of stats) {
+    counts[stat._id] = stat.count;
+    total += stat.count;
+  }
+  
+  return { 
+    total, 
+    counts, 
+    conversionRate: total ? Number((((counts.WON ?? 0) / total) * 100).toFixed(1)) : 0 
+  };
 }

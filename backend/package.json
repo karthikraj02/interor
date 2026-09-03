@@ -5,8 +5,8 @@
   "scripts": {
     "test": "node --test",
     "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
-    ,"hash-admin-password": "node scripts/create-password-hash.mjs"
+    "dev": "node --watch src/index.js",
+    "hash-admin-password": "node scripts/create-password-hash.mjs"
   },
   "keywords": [],
   "author": "",
@@ -19,8 +19,8 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.6.2",
     "helmet": "^8.3.0",
+    "mongoose": "^9.9.2",
     "nodemailer": "^9.0.5",
-    "pg": "^8.23.0",
     "zod": "^4.4.3"
   }
 }

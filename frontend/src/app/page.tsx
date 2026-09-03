@@ -6,12 +6,13 @@ import { About } from "@/components/about/About";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { PortfolioSection } from "@/components/portfolio/PortfolioSection";
 import { Process } from "@/components/process/Process";
+import { Testimonials } from "@/components/testimonials/Testimonials";
 import { ContactSection } from "@/components/contact/ContactSection";
 import { Footer } from "@/components/footer/Footer";
 import { getSiteConfig } from "@/lib/site-config";
 
 export default function Home() {
-  const { businessName, phoneDisplay, telHref, whatsappHref, instagramUrl, youtubeUrl, facebookUrl } = getSiteConfig();
+  const { businessName, telHref, whatsappHref, instagramUrl, youtubeUrl, facebookUrl } = getSiteConfig();
 
   return (
     <MotionRoot>
@@ -22,7 +23,8 @@ export default function Home() {
         <ServicesSection />
         <PortfolioSection />
         <Process />
-        <ContactSection phoneDisplay={phoneDisplay} telHref={telHref} whatsappHref={whatsappHref} />
+        <Testimonials />
+        <ContactSection />
       </main>
       <Footer businessName={businessName} instagramUrl={instagramUrl} youtubeUrl={youtubeUrl} facebookUrl={facebookUrl} />
       <MobileActionBar telHref={telHref} whatsappHref={whatsappHref} />
