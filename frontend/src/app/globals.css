@@ -197,6 +197,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .admin-shell .border-white\/10 { border-color: var(--line); }
 .admin-shell .border-white\/5 { border-color: color-mix(in srgb, var(--line) 70%, transparent); }
 .admin-shell .hover\:bg-white\/5:hover { background: var(--bg-secondary); }
+.legal-page { width: min(100% - 3rem, 76rem); min-height: 70vh; margin-inline: auto; padding-block: clamp(4.5rem, 9vw, 8rem); }
+.legal-heading { max-width: 55rem; padding-bottom: 3.2rem; border-bottom: 1px solid var(--line); }
+.legal-heading h1 { margin: 1.1rem 0 1rem; font-size: clamp(3.5rem, 7vw, 6rem); line-height: .98; }
+.legal-heading > p:last-child { max-width: 48rem; margin: 0; color: var(--text-secondary); font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.8; }
+.legal-content { max-width: 58rem; padding-top: .75rem; }
+.legal-section { display: grid; grid-template-columns: 3rem 1fr; gap: 1.25rem; padding-block: 2rem; border-bottom: 1px solid var(--line); }
+.legal-index { padding-top: .45rem; color: #a9805e; font-family: var(--font-display), Georgia, serif; font-size: 1.2rem; }
+.legal-section h2, .legal-contact h2 { margin: 0 0 .7rem; font-size: 1.55rem; line-height: 1.2; }
+.legal-section p { margin: 0; color: var(--text-secondary); font-size: .94rem; line-height: 1.85; }
+.legal-section p + p { margin-top: .8rem; }
+.legal-contact { display: flex; flex-wrap: wrap; align-items: baseline; gap: .8rem 1.4rem; margin-top: 2rem; padding: 1.4rem; background: var(--bg-secondary); }
+.legal-contact h2 { width: 100%; margin-bottom: .1rem; }
+.legal-contact a { color: var(--accent); font-size: .92rem; text-decoration: underline; text-decoration-color: var(--accent-soft); text-underline-offset: .22rem; }
 
 @media (max-width: 900px) {
   .site-nav { width: min(100% - 2rem, 88rem); }
@@ -227,6 +240,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .hero-stamp { width: 128px; border-width: 6px; }
   .hero-stamp span:first-child { font-size: 1.8rem; }
   .section, .section-wide { width: calc(100% - 2.5rem); padding-block: 4.3rem; }
+  .legal-page { width: calc(100% - 2.5rem); padding-block: 4.3rem; }
+  .legal-heading { padding-bottom: 2.3rem; }
+  .legal-heading h1 { font-size: clamp(3.3rem, 14vw, 4.8rem); }
+  .legal-section { grid-template-columns: 2rem 1fr; gap: .8rem; padding-block: 1.5rem; }
+  .legal-section h2 { font-size: 1.35rem; }
+  .legal-section p { font-size: .9rem; }
   .section-title { font-size: clamp(2.45rem, 11vw, 3.55rem); }
   .section-header-row { align-items: start; flex-direction: column; gap: 1.25rem; }
   .intro-grid, .review-grid, .feature-grid, .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
