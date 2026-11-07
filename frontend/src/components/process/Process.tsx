@@ -1,30 +1,28 @@
 import { whyChooseUs } from "@/data/site";
 
-const steps = ["Discovery", "Design direction", "Detailed planning", "Execution", "Handover"];
+const steps = [
+  { title: "Tell us what home means to you.", text: "We listen to your ideas, routines, priorities, and budget before drawing a line." },
+  { title: "Shape the vision together.", text: "Explore layouts, materials, and details with a design team that keeps you in the loop." },
+  { title: "Bring every detail to life.", text: "From thoughtful planning to the finishing touches, we guide your project through to handover." },
+];
 
 export function Process() {
   return (
     <section id="process" className="section">
-      <p className="section-label eyebrow-rule reveal">PROCESS</p>
-      <h2 className="section-title reveal">Clear steps, informed decisions.</h2>
-      <ol className="mt-10 grid gap-4 md:grid-cols-5">
+      <p className="section-label eyebrow-rule reveal">HOW WE WORK</p>
+      <h2 className="section-title reveal">A considered process, from the first conversation.</h2>
+      <p className="section-copy reveal">Good design should feel collaborative and clear. We take care of the details while keeping your vision at the centre.</p>
+      <ol className="process-list">
         {steps.map((step, index) => (
-          <li key={step} className="glass-card reveal rounded-2xl p-5">
-            <span className="text-sm text-[var(--accent)]">0{index + 1}</span>
-            <p className="mt-3">{step}</p>
+          <li key={step.title} className="process-step reveal">
+            <span className="process-number">0{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
           </li>
         ))}
       </ol>
-
-      <p className="section-label eyebrow-rule reveal mt-20">WHY CHOOSE US</p>
-      <h2 className="section-title reveal">Built on warranty, craft, and transparent pricing.</h2>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {whyChooseUs.map((item) => (
-          <article key={item.title} className="glass-card reveal rounded-2xl p-6">
-            <h3 className="text-lg">{item.title}</h3>
-            <p className="mt-3 text-sm text-[var(--text-secondary)]">{item.text}</p>
-          </article>
-        ))}
+      <div className="trust-row"><p className="section-label eyebrow-rule reveal">THE SAI PROMISE</p>
+        <div className="trust-points">{whyChooseUs.slice(0, 3).map((item) => <article className="value-note reveal" key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
       </div>
     </section>
   );

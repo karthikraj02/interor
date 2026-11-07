@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { MobileMenu } from "./MobileMenu";
@@ -22,6 +23,7 @@ type NavbarProps = {
 
 export function Navbar({ businessName, whatsappHref }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -29,11 +31,15 @@ export function Navbar({ businessName, whatsappHref }: NavbarProps) {
     setMenuOpen(false);
     menuButtonRef.current?.focus();
   };
+  const visibleNavItems = navItems.map((item) => ({
+    ...item,
+    href: pathname === "/" ? item.href : `/${item.href}`,
+  }));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-black/40 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-        <Link href="/#home" className="flex items-center gap-3">
+    <header className="site-header">
+      <nav className="site-nav">
+        <Link href="/#home" className="brand-mark">
           <Image
             src="/images/logo.png"
             alt={businessName}
@@ -43,14 +49,14 @@ export function Navbar({ businessName, whatsappHref }: NavbarProps) {
             priority
           />
         </Link>
-        <div className="hidden gap-7 md:flex">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="menu-link">
+        <div className="nav-links hidden md:flex">
+          {visibleNavItems.map((item) => (
+            <Link key={item.href} href={item.href} className="menu-link">
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
-        <div className="flex gap-2">
+        <div className="nav-actions">
           <button
             onClick={toggleTheme}
             className="icon-button"
@@ -59,8 +65,8 @@ export function Navbar({ businessName, whatsappHref }: NavbarProps) {
             {theme === "dark" ? "☼" : "◐"}
           </button>
           {whatsappHref && (
-            <a href={whatsappHref} className="btn-primary hidden sm:block">
-              WhatsApp
+            <a href={whatsappHref} className="btn-primary desktop-contact hidden sm:inline-flex">
+              Book a consultation
             </a>
           )}
           <button
@@ -75,7 +81,7 @@ export function Navbar({ businessName, whatsappHref }: NavbarProps) {
           </button>
         </div>
       </nav>
-      <MobileMenu open={menuOpen} onClose={closeMenu} items={navItems} whatsappHref={whatsappHref} />
+      <MobileMenu open={menuOpen} onClose={closeMenu} items={visibleNavItems} whatsappHref={whatsappHref} />
     </header>
   );
 }

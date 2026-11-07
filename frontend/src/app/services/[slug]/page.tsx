@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { services } from "@/data/services";
+import { SiteFrame } from "@/components/layout/SiteFrame";
 
 export function generateStaticParams() {
   return services.map(({ slug }) => ({ slug }));
@@ -25,13 +26,13 @@ export default async function Service({ params }: { params: Promise<{ slug: stri
   if (!service) notFound();
 
   return (
-    <main className="section">
-      <p className="section-label">SERVICE · {service.category.toUpperCase()}</p>
-      <h1 className="section-title">{service.title}</h1>
+    <SiteFrame><main className="section">
+      <p className="section-label eyebrow-rule">SERVICE · {service.category.toUpperCase()}</p>
+      <h1 className="section-title">{service.title}, made for your home.</h1>
       <p className="section-copy">{service.description}</p>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-white/10">
+      <div className="service-detail-grid">
+        <div className="service-detail-image">
           <Image
             src={service.image}
             alt={`${service.title} interior design by Sai Interior Designers`}
@@ -40,13 +41,13 @@ export default async function Service({ params }: { params: Promise<{ slug: stri
             className="h-full w-full object-cover"
           />
         </div>
-        <ul className="space-y-3">
+        <div><p className="section-label">CONSIDERED DETAILS</p><ul className="service-feature-list">
           {service.features.map((feature) => (
-            <li key={feature} className="glass-card rounded-xl p-4 text-sm text-[var(--text-secondary)]">
+            <li key={feature}>
               {feature}
             </li>
           ))}
-        </ul>
+        </ul></div>
       </div>
 
       <div className="mt-10 flex flex-wrap gap-4">
@@ -57,6 +58,6 @@ export default async function Service({ params }: { params: Promise<{ slug: stri
           All services
         </Link>
       </div>
-    </main>
+    </main></SiteFrame>
   );
 }

@@ -11,11 +11,11 @@ type GalleryGridProps = {
  */
 export function GalleryGrid({ images }: GalleryGridProps) {
   return (
-    <div className="gap-4 [column-fill:_balance] sm:columns-2 lg:columns-3">
+    <div className="gallery-grid">
       {images.map((image) => (
         <div
           key={image.src}
-          className="mb-4 overflow-hidden rounded-xl border border-white/10 break-inside-avoid"
+          className="gallery-item"
         >
           <Image
             src={image.src}

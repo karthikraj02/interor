@@ -6,20 +6,18 @@ export function PortfolioSection() {
   const preview = gallery.slice(0, 12);
 
   return (
-    <section id="portfolio" className="section">
-      <p className="section-label eyebrow-rule reveal">PORTFOLIO</p>
-      <h2 className="section-title reveal">Recent work from across Mangaluru &amp; Udupi.</h2>
-      <p className="section-copy reveal">
-        A selection of completed interiors — homes, kitchens, and commercial spaces delivered by our team.
-      </p>
+    <section id="portfolio" className="editorial-band portfolio-preview">
+      <div className="section-wide">
+      <div className="section-header-row"><div className="section-heading">
+      <p className="section-label eyebrow-rule reveal">SELECTED PROJECTS</p>
+      <h2 className="section-title reveal">Real homes, thoughtfully reimagined.</h2>
+      <p className="section-copy reveal">A glimpse of the rooms and details we have brought to life across Mangaluru and Udupi.</p>
+      </div><Link href="/projects" className="text-link">Explore the gallery <span aria-hidden="true">→</span></Link></div>
 
       <div className="reveal mt-10">
         <GalleryGrid images={preview} />
       </div>
-
-      <Link href="/projects" className="btn-secondary mt-8 inline-block">
-        View full gallery
-      </Link>
+      </div>
     </section>
   );
 }

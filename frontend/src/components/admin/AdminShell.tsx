@@ -49,8 +49,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-white/10 bg-black/30">
+    <div className="admin-shell min-h-screen">
+      <header className="admin-header">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <nav className="flex gap-6">
             {navItems.map((item) => (

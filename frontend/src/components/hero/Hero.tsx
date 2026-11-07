@@ -1,30 +1,30 @@
-import { ThreeBackground } from "@/components/animations/ThreeBackground";
+import Image from "next/image";
 
 export function Hero() {
   return (
-    <section id="home" className="hero-section relative overflow-hidden px-6">
-      <ThreeBackground />
-      <div className="relative z-10 mx-auto grid min-h-[82vh] max-w-7xl items-center gap-12 py-20 lg:grid-cols-2">
-        <div>
+    <section id="home" className="hero-section">
+      <div className="hero-grid">
+        <div className="hero-copy">
           <p className="section-label eyebrow-rule">SAI INTERIOR DESIGNERS · SINCE 2015</p>
-          <h1 className="mt-5 text-5xl font-semibold leading-tight md:text-7xl">
-            We design thoughtful, livable spaces.
-          </h1>
-          <p className="section-copy text-lg">
-            Based in Mangalore, we specialise in residential interiors, commercial spaces, and modular kitchens
-            that blend creativity, functionality, and timeless elegance. Every space tells a story — yours.
+          <h1 className="hero-title">A home that feels <em>like you.</em></h1>
+          <p className="hero-description">
+            Thoughtful interiors, made for the way you live. We bring together considered design, enduring craft,
+            and a personal touch across Mangaluru and Udupi.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a href="#contact" className="btn-primary">
-              Get a quotation
-            </a>
-            <a href="#portfolio" className="btn-secondary">
-              See our work
-            </a>
+          <div className="hero-actions">
+            <a href="#contact" className="btn-primary">Let&apos;s talk about your space <span aria-hidden="true">↗</span></a>
+            <a href="#portfolio" className="text-link">Explore our work <span aria-hidden="true">→</span></a>
+          </div>
+          <div className="hero-note">
+            <strong>800+</strong><span>spaces thoughtfully designed</span><span className="note-separator" aria-hidden="true" />
+            <span>Serving Mangaluru &amp; Udupi</span>
           </div>
         </div>
-        <div className="hero-art" aria-hidden>
-          <div className="hero-orb" />
+        <div className="hero-visual" aria-label="A completed bedroom interior by Sai Interior Designers">
+          <div className="hero-photo">
+            <Image src="/images/portfolio/project-10.jpeg" alt="Warm modern bedroom with a botanical feature wall and soft neutral furnishings" fill priority sizes="(max-width: 767px) 100vw, 58vw" />
+          </div>
+          <div className="hero-stamp" aria-hidden="true"><span>10+</span><span>Years of thoughtful living</span></div>
         </div>
       </div>
     </section>

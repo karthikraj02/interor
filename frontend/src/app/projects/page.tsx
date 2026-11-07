@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { GalleryGrid } from "@/components/portfolio/GalleryGrid";
 import { gallery } from "@/data/gallery";
+import { SiteFrame } from "@/components/layout/SiteFrame";
 
 export const metadata = {
   title: "Gallery",
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default function Projects() {
   return (
-    <main className="section">
+    <SiteFrame><main className="section">
       <p className="section-label">PROJECTS</p>
       <h1 className="section-title">Project gallery</h1>
       <p className="section-copy">
@@ -23,6 +24,6 @@ export default function Projects() {
       <Link href="/#contact" className="btn-primary mt-10 inline-block">
         Start your project
       </Link>
-    </main>
+    </main></SiteFrame>
   );
 }

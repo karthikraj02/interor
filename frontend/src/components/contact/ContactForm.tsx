@@ -108,7 +108,7 @@ export function ContactForm() {
   );
 
   return (
-    <form onSubmit={submit} className="glass-card reveal space-y-4 rounded-3xl p-6" noValidate>
+    <form onSubmit={submit} className="contact-card reveal space-y-4" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         {field("name", "Name")}
         {field("phone", "Phone", "tel")}
@@ -205,7 +205,7 @@ export function ContactForm() {
       <button disabled={status === "sending"} className="btn-primary w-full disabled:opacity-60">
         {status === "sending" ? "Sending…" : "Request consultation"}
       </button>
-      <p aria-live="polite" className={status === "error" ? "text-sm text-[#f4a3a3]" : "text-sm text-[var(--accent)]"}>
+      <p aria-live="polite" className={`form-notice ${status === "error" ? "is-error" : ""}`}>
         {notice}
       </p>
     </form>

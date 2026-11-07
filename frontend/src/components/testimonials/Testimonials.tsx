@@ -1,22 +1,20 @@
 import { testimonials } from "@/data/testimonials";
 
 export function Testimonials() {
+  const featured = testimonials.slice(0, 3);
   return (
-    <section id="testimonials" className="section">
-      <p className="section-label eyebrow-rule reveal">CLIENT FEEDBACK</p>
-      <h2 className="section-title reveal">Hear from our clients.</h2>
-      <div className="mt-10 grid gap-5 md:grid-cols-2">
-        {testimonials.map((testimonial) => (
-          <figure key={testimonial.name} className="glass-card reveal rounded-2xl p-7">
-            <blockquote className="text-[var(--text-secondary)]">
-              &ldquo;{testimonial.quote}&rdquo;
-            </blockquote>
-            <figcaption className="mt-5">
-              <span className="block text-[var(--text-primary)]">{testimonial.name}</span>
-              <span className="text-sm text-[var(--text-secondary)]">{testimonial.location}</span>
-            </figcaption>
-          </figure>
-        ))}
+    <section id="testimonials" className="editorial-band">
+      <div className="section-wide">
+        <div className="section-header-row"><div><p className="section-label eyebrow-rule reveal">KIND WORDS</p><h2 className="section-title reveal">The best part is hearing, “this feels like us.”</h2></div><div className="rating-lockup"><span>★★★★★</span><small>Made with care, remembered with love</small></div></div>
+        <div className="testimonial-grid">
+          {featured.map((testimonial) => (
+            <figure key={testimonial.name} className="testimonial-card reveal">
+              <div className="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+              <blockquote>&ldquo;{testimonial.quote}&rdquo;</blockquote>
+              <figcaption>{testimonial.name}<span>{testimonial.location}</span></figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );

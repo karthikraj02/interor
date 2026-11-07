@@ -1,6 +1,4 @@
-import { Navbar } from "@/components/layout/Navbar";
-import { MobileActionBar } from "@/components/layout/MobileActionBar";
-import { MotionRoot } from "@/components/layout/MotionRoot";
+import { SiteFrame } from "@/components/layout/SiteFrame";
 import { Hero } from "@/components/hero/Hero";
 import { About } from "@/components/about/About";
 import { ServicesSection } from "@/components/services/ServicesSection";
@@ -8,15 +6,10 @@ import { PortfolioSection } from "@/components/portfolio/PortfolioSection";
 import { Process } from "@/components/process/Process";
 import { Testimonials } from "@/components/testimonials/Testimonials";
 import { ContactSection } from "@/components/contact/ContactSection";
-import { Footer } from "@/components/footer/Footer";
-import { getSiteConfig } from "@/lib/site-config";
 
 export default function Home() {
-  const { businessName, telHref, whatsappHref, instagramUrl, youtubeUrl, facebookUrl } = getSiteConfig();
-
   return (
-    <MotionRoot>
-      <Navbar businessName={businessName} whatsappHref={whatsappHref} />
+    <SiteFrame>
       <main>
         <Hero />
         <About />
@@ -26,8 +19,6 @@ export default function Home() {
         <Testimonials />
         <ContactSection />
       </main>
-      <Footer businessName={businessName} instagramUrl={instagramUrl} youtubeUrl={youtubeUrl} facebookUrl={facebookUrl} />
-      <MobileActionBar telHref={telHref} whatsappHref={whatsappHref} />
-    </MotionRoot>
+    </SiteFrame>
   );
 }

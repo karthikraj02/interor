@@ -2,27 +2,26 @@ import { aboutIntro, stats, values } from "@/data/site";
 
 export function About() {
   return (
-    <section id="about" className="section">
-      <p className="section-label eyebrow-rule reveal">OUR APPROACH</p>
-      <h2 className="section-title reveal">A collaborative design journey, from first idea to final detail.</h2>
-      <p className="section-copy reveal">{aboutIntro}</p>
+    <section id="about" className="editorial-band">
+      <div className="section-wide">
+      <div className="intro-grid">
+        <div><p className="section-label eyebrow-rule reveal">OUR APPROACH</p><h2 className="section-title reveal">A little more you in every room.</h2></div>
+        <p className="intro-copy reveal">{aboutIntro}</p>
+      </div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="stats-row">
         {stats.map((stat) => (
-          <div key={stat.label} className="glass-card reveal rounded-2xl p-6">
+          <div key={stat.label} className="reveal">
             <p className="stat-figure">{stat.value}</p>
-            <p className="mt-1 text-sm text-[var(--text-secondary)]">{stat.label}</p>
+            <p className="stat-label">{stat.label}</p>
           </div>
         ))}
       </div>
-
-      <div className="mt-6 grid gap-4 md:grid-cols-3 lg:grid-cols-5">
+      <div className="value-grid">
         {values.map((value) => (
-          <article key={value.title} className="glass-card reveal rounded-2xl p-6">
-            <h3 className="text-lg">{value.title}</h3>
-            <p className="mt-3 text-sm text-[var(--text-secondary)]">{value.text}</p>
-          </article>
+          <article key={value.title} className="value-note reveal"><h3>{value.title}</h3><p>{value.text}</p></article>
         ))}
+      </div>
       </div>
     </section>
   );

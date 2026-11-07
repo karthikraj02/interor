@@ -61,7 +61,7 @@ export function MobileMenu({ open, onClose, items, whatsappHref }: MobileMenuPro
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
-      className="border-t border-white/10 px-6 py-4 md:hidden"
+      className="mobile-panel md:hidden"
     >
       {items.map((item) => (
         <a onClick={onClose} className="block py-2.5 text-lg" href={item.href} key={item.href}>
